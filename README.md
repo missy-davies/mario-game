@@ -2,7 +2,7 @@
 
 ## Overview
 This is a simple Mario game with 5 levels built to learn Kaboom.js. I created the 
-first two levels by following this [YouTube tutorial by Code with Ania Kubów](https://youtu.be/2nucjefSr6I). 
+first two levels by following this [YouTube tutorial by Code with Ania Kubów](https://youtu.be/2nucjefSr6I), then expanded and built the following three levels myself! 
 
 ## Features 
 - 5 levels of the game
