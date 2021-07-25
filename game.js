@@ -33,27 +33,52 @@ loadSprite('blue-steel', 'gqVoI2b.png')
 loadSprite('blue-evil-shroom', 'SvV4ueD.png')
 loadSprite('blue-surprise', 'RMqCc1G.png')
 
+loadSprite('flower', 'uaUm9sN.png')
+
 scene("game", ({ level, score }) => {
   layers(['bg', 'obj', 'ui'], 'obj')
   
   const maps = [
-                [ '                                      ', // level 1
-                  '                                      ',
-                  '                                      ',
-                  '    %      =*=%=                      ',
-                  '                                      ',
-                  '                            -+        ',
-                  '                    ^   ^   ()        ',
-                  '==============================   =====',], // level 2 
-                [ '                                     £',
-                  '                                     £',
-                  '£                                    £',
-                  '£                         x x x      £',
-                  '£     @@@@@@@         x x x x x x    £',
-                  '£                   x x x x x x x  -+£',
-                  '£           z   z x x x x x x x x  ()£',
-                  '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!',],
-                // [],
+                ['                                      ', // level 1
+                 '                                      ',
+                 '                                      ',
+                 '    %      =*=%=                      ',
+                 '                                      ',
+                 '                            -+        ',
+                 '                    ^   ^   ()        ',
+                 '==============================   ====='],  
+                ['                                     £', // level 2
+                 '                                     £',
+                 '£                                    £',
+                 '£                         x x x      £',
+                 '£     @@@@@@@         x x x x x x    £',
+                 '£                   x x x x x x x  -+£',
+                 '£           z   z x x x x x x x x  ()£',
+                 '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'],
+                ['                                      ', // level 3 
+                 '                                      ',
+                 '             %%                       ',
+                 '       %                              ',
+                 '                          *         -+',
+                 '                        $$          ()',
+                 '   ^~        ^        ^          $$ ==',
+                 '========   =====   ==========   ======'],
+                ['                                      ', // level 4 
+                 '                            @     ^ -+',
+                 '                                  xx()',
+                 '                          !!!!!!      ',
+                 '    @             ^   !!!             ',
+                 '                 !!!      $$          ',
+                 '      ^      ^                        ',
+                 '!!!!!!!!    !!!!        !!!!          '],
+                ['                 $$                   ', // level 5 
+                 '                                      ',
+                 '                                      ',
+                 '       %                              ',
+                 '                                      ',
+                 '                          -+      *   ',
+                 '   ~~             ^       ()          ',
+                 '==============  ====  ==  == ==   ===='],
                ]
 
   const levelCfg = {
@@ -68,13 +93,14 @@ scene("game", ({ level, score }) => {
     ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
     '-': [sprite('pipe-top-left'), solid(), scale(0.5), 'pipe'],
     '+': [sprite('pipe-top-right'), solid(), scale(0.5), 'pipe'],
-    '^': [sprite('evil-shroom'), solid(), 'dangerous'],
+    '^': [sprite('evil-shroom'), solid(), body(), 'dangerous'],
     '#': [sprite('mushroom'), solid(), body(), 'mushroom'],
     '!': [sprite('blue-block'), solid(), scale(0.5)],
     '£': [sprite('blue-brick'), solid(), scale(0.5)],
     'x': [sprite('blue-steel'), solid(), scale(0.5)],
-    'z': [sprite('blue-evil-shroom'), solid(), scale(0.5), 'dangerous'],
+    'z': [sprite('blue-evil-shroom'), solid(), scale(0.5), body(), 'dangerous'],
     '@': [sprite('blue-surprise'), solid(), scale(0.5), 'coin-surprise'],
+    '~': [sprite('flower'), solid()],
   }
 
   const gameLevel = addLevel(maps[level], levelCfg)
@@ -217,4 +243,4 @@ scene('lose', ({ score }) => {
   add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
 })
 
-start("game", { level: 0, score: 0 })
+start("game", { level: 4, score: 0 })
