@@ -1,11 +1,17 @@
 # README
 
 ## Overview
-Currently building a simple Mario game to learn Kaboom.js by following this
-[YouTube tutorial by Code with Ania Kubów](https://youtu.be/2nucjefSr6I). 
+This is a simple Mario game with 5 levels built to learn Kaboom.js. I created the 
+first two levels by following this [YouTube tutorial by Code with Ania Kubów](https://youtu.be/2nucjefSr6I). 
 
 ## Features 
-- Two levels of the game
+- 5 levels of the game
+- Mario player can jump, eat mushrooms and become big, collect coins, and kill
+evil mushrooms
+- Score is saved across each level 
+- By going down a pipe, the Mario player reaches the next level! 
+
+![Demo](demo.gif)
 
 ## Technologies
 Languages:
