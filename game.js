@@ -44,13 +44,13 @@ scene("game", () => {
     '$': [sprite('coin')],
     '%': [sprite('surprise'), solid(), 'coin-surprise'],
     '*': [sprite('surprise'), solid(), 'mushroom-surprise'],
-    ']': [sprite('unboxed'), solid()],
+    '}': [sprite('unboxed'), solid()],
     '(': [sprite('pipe-bottom-left'), solid(), scale(0.5)],
     ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
     '-': [sprite('pipe-top-left'), solid(), scale(0.5)],
     '+': [sprite('pipe-top-right'), solid(), scale(0.5)],
     '^': [sprite('evil-shroom'), solid()],
-    '#': [sprite('mushroom'), solid()],
+    '#': [sprite('mushroom'), solid(), body(), 'mushroom'],
   }
 
   const gameLevel = addLevel(map, levelCfg)
@@ -68,13 +68,59 @@ scene("game", () => {
     text('level ' + 'test', pos(4, 6))
   ])
 
+  function big() {
+    let timer = 0
+    let isBig = false
+    return {
+      update() {
+        if  (isBig) {
+          timer -= dt()
+          if (timer <= 0) {
+            this.smallify()
+          }
+        }
+      },
+      isBig() {
+        return isBig
+      },
+      smallify() {
+        this.scale = vec2(1)
+        timer = 0 
+        isBig = false 
+      },
+      biggify(time) {
+        this.scale = vec2(2)
+        timer = time
+        isBig = true
+      }
+    }
+  }
+
   const player = add([
     sprite('mario'), 
-    solid(), 
-    pos(30, 0),
-    body(),
-    origin('bot')
+    solid(), // things can't pass through Mario 
+    pos(30, 0), // starting position for player 
+    body(), // component for falling and jumping 
+    big(),
+    origin('bot') // more on starting place for player
   ])
+
+  action('mushroom', (m) => {  // grab anything with mushroom tag and allow it to move 
+    m.move(10, 0)
+  }) 
+
+  player.on('headbump', (obj) => {
+    if (obj.is('coin-surprise')) {                 // if the object headbumped is a coin surprise
+      gameLevel.spawn('$', obj.gridPos.sub(0, 1))  // then we want the game to span a new coin sprite positioned above where the box was 
+      destroy(obj)                                 // then destroy the original object we headbumped 
+      gameLevel.spawn('}', obj.gridPos.sub(0, 0))  // replace the coin surprise block with the unboxed block 
+    }
+    if (obj.is('mushroom-surprise')) {            
+      gameLevel.spawn('#', obj.gridPos.sub(0, 1))  
+      destroy(obj)                                 
+      gameLevel.spawn('}', obj.gridPos.sub(0, 0))  
+    }
+  })
 
   keyDown('left', () => {
     player.move(-MOVE_SPEED, 0)
